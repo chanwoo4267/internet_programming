@@ -9,8 +9,8 @@ const app = express();
 const port = 3001;
 
 let corsOptions = {
-  origin: '*',      // 출처 허용 옵션
-  credential: true, // 사용자 인증이 필요한 리소스(쿠키 등) 접근
+  origin: '*',      
+  credential: true, 
 }
 app.use(cors(corsOptions))
 app.use(bodyParser.json());
@@ -32,7 +32,6 @@ connection.connect((err) => {
 
 const url = 'https://steamcharts.com/top';
 
-// Function to clear all data from the table
 const clearTable = () => {
   const clearQuery = 'DELETE FROM game';
   connection.query(clearQuery, (err) => {
@@ -66,7 +65,6 @@ const fillTable = async () => {
       });
     });
 
-    // Insert data into the MySQL table
     data.forEach((item) => {
       const insertQuery = `
         INSERT INTO game (popularity, name, current, peak)
@@ -88,11 +86,9 @@ const fillTable = async () => {
   }
 };
 
-// Initial call to clear and fill the table
 clearTable();
 fillTable();
 
-// Endpoint to send data from MySQL to React frontend
 app.get('/crawl', async (req, res) => {
   try {
     const selectQuery = 'SELECT * FROM game';
@@ -110,11 +106,9 @@ app.get('/crawl', async (req, res) => {
   }
 });
 
-// Route to add manually entered data
 app.post('/add', (req, res) => {
   const { name, current, peak } = req.body;
 
-  // Validate the received data (add more validation as needed)
   if (!name || !current || !peak) {
     return res.status(400).json({ error: 'Invalid input data' });
   }
@@ -126,14 +120,12 @@ app.post('/add', (req, res) => {
 
   const values = [0, name, current, peak];
 
-  // Execute the INSERT query
   connection.query(insertQuery, values, (err, results) => {
     if (err) {
       console.error('Error inserting data into MySQL:', err);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
 
-    // Return the inserted data
     res.json({ message: 'Data added successfully', insertedData: { id: results.insertId, ...req.body } });
   });
 });

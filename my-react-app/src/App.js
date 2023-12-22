@@ -123,8 +123,12 @@ const App = () => {
   };
 
   const filterData = () => {
-    if (option === 'current' || option === 'peak') {
+    if (option === 'current') {
       return data.filter((item) => item.current >= fromValue && item.current <= toValue);
+    }
+    else
+    {
+      return data.filter((item) => item.peak >= fromValue && item.peak <= toValue);
     }
     return data;
   };
