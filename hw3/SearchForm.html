@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<HTML>
+    <head>
+        <meta charset="utf-8">
+        <title>Internet Programming HW2</title>
+    </head>
+    <body>
+        <h1>ajax Sign Up Search</h1>
+        <hr>
+        <h2>Example Sign Up Page</h2>
+
+        <p>Select Options</p>
+        
+        <p>
+            <label>
+                <input type="radio" name="option" value="id" checked>ID
+                <input type="radio" name="option" value="pw">Password
+                <input type="radio" name="option" value="email">Email
+                <input type="radio" name="option" value="addr">Address
+                <input type="radio" name="option" value="phone">Phone number
+                <input type="radio" name="option" value="school">School
+                <input type="radio" name="option" value="major">Major
+                <input type="radio" name="option" value="interests">Interests
+            </label>
+        </p>
+        <p>
+            <label>
+                Content : <input type="text" name="content" onfocus="showInput(this.value)" oninput="showInput(this.value)">
+            </label>
+        </p>
+        <p>
+            <button onclick="showSearch()">search</button>
+        </p>
+        <p>
+            <button onclick="showTables()">all data</button>
+        </p>
+        <hr>
+        <h2>(Sign Up Search) Your Input:</h2>
+        <p id="inputresult"></p>
+        <hr>
+        <h2>Search result</h2>
+        <div id="searchresult"></div>
+        <hr>
+        <h2>Table Elements</h2>
+        <div id="table-elements"></div>
+    </body>
+    <script>
+        function showTables() {
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    displayTables(data);
+                }
+            };
+
+            xmlhttp.open("GET", "http://cspro.sogang.ac.kr/~cse20171645/cgi-bin/get_mysql.php", true);
+            xmlhttp.send();
+        }
+
+        function displayTables(data) {
+            // Access the data and display it in your HTML table
+            var table = "<table border='1'><tr><th>ID</th><th>Password</th><th>Email</th><th>Address</th><th>Phone</th><th>School</th><th>Major</th><th>Interests</th><th>Registration Date</th></tr>";
+
+            for (var i = 0; i < data.length; i++) {
+                table += "<tr>";
+                table += "<td>" + data[i].id + "</td>";
+                table += "<td>" + data[i].pw + "</td>";
+                table += "<td>" + data[i].email + "</td>";
+                table += "<td>" + data[i].addr + "</td>";
+                table += "<td>" + data[i].phone + "</td>";
+                table += "<td>" + data[i].school + "</td>";
+                table += "<td>" + data[i].major + "</td>";
+                table += "<td>" + data[i].interests + "</td>";
+                table += "<td>" + data[i].reg_date + "</td>";
+                table += "</tr>";
+            }
+
+            table += "</table>";
+            document.getElementById("table-elements").innerHTML = table;
+        }
+
+        function showSearch() {
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    displaySearch(data);
+                }
+            };
+
+            xmlhttp.open("GET", "http://cspro.sogang.ac.kr/~cse20171645/cgi-bin/get_mysql.php", true);
+            xmlhttp.send();
+        }
+
+        function displaySearch(data) {
+            // Access the data and display it in your HTML table
+            var table = "<table border='1'><tr><th>ID</th><th>Password</th><th>Email</th><th>Address</th><th>Phone</th><th>School</th><th>Major</th><th>Interests</th><th>Registration Date</th></tr>";
+
+            var selectedOption = document.querySelector('input[name="option"]:checked').value;
+            var content = document.getElementsByName("content")[0].value;
+
+            for (var i = 0; i < data.length; i++) 
+            {
+                if ((selectedOption == "id" && data[i].id == content) || (selectedOption == "pw" && data[i].pw == content) || (selectedOption == "email" && data[i].email == content) || (selectedOption == "addr" && data[i].addr == content) || (selectedOption == "phone" && data[i].phone == content) || (selectedOption == "school" && data[i].school == content) || (selectedOption == "major" && data[i].major == content) || (selectedOption == "interests" && data[i].interests == content)){
+                    table += "<tr>";
+                    table += "<td>" + data[i].id + "</td>";
+                    table += "<td>" + data[i].pw + "</td>";
+                    table += "<td>" + data[i].email + "</td>";
+                    table += "<td>" + data[i].addr + "</td>";
+                    table += "<td>" + data[i].phone + "</td>";
+                    table += "<td>" + data[i].school + "</td>";
+                    table += "<td>" + data[i].major + "</td>";
+                    table += "<td>" + data[i].interests + "</td>";
+                    table += "<td>" + data[i].reg_date + "</td>";
+                    table += "</tr>";
+                }
+            }
+
+            table += "</table>";
+            document.getElementById("searchresult").innerHTML = table;
+        }
+
+        function showInput(str) {
+            var selectedOption = document.querySelector('input[name="option"]:checked').value;
+            document.getElementById("inputresult").innerHTML = selectedOption + " : ";
+            if (str.length == 0) {
+                return;
+            }
+            else 
+            {
+                document.getElementById("inputresult").innerHTML += str;
+            }
+        }
+        
+        var xmlhttp = new XMLHttpRequest();
+    </script>
+</HTML>

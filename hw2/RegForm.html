@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<HTML>
+    <head>
+        <meta charset="utf-8">
+        <title>Internet Programming HW2</title>
+    </head>
+    <body>
+        <h1>Sign Up</h1>
+        <hr>
+        <h2>CSE20171645 Sign Up Page</h2>
+
+        <form method="GET" action="http://cspro.sogang.ac.kr/~cse20171645/cgi-bin/db_insert.php">
+            <p>
+                <label>
+                    ID :
+                    <input type="text" name="id" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Password :
+                    <input type="password" name="password" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    E-mail :
+                    <input type="email" name="email" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Home Address :
+                    <input type="text" name="address" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Phone Number :
+                    <input type="text" name="phone" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    School :
+                    <input type="text" name="school" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Major :
+                    <input type="radio" name="major" value="ComputerScience" checked> Computer Science
+                    <input type="radio" name="major" value="Electronic"> Electronic
+                    <input type="radio" name="major" value="ChemicalAndBiomolecular"> Chemical and Biomolecular
+                    <input type="radio" name="major" value="Mechanical"> Mechanical
+                    <input type="radio" name="major" value="Etc"> Else
+                </label>
+            </p>
+            <p>
+                <label>
+                    Interests :
+                    <input type="checkbox" name="interest[]" value="ComputerScience"> Computer Science
+                    <input type="checkbox" name="interest[]" value="Electronic"> Electronic
+                    <input type="checkbox" name="interest[]" value="ChemicalAndBiomolecular"> Chemical and Biomolecular
+                    <input type="checkbox" name="interest[]" value="Mechanical"> Mechanical
+                    <input type="checkbox" name="interest[]" value="Etc"> Else
+                </label>
+            </p>
+            <p>
+                <input type="submit" value="Sign Up">
+            </p>
+        </form>
+    </body>
+</HTML>

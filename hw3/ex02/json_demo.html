@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>Fetch a JSON file with XMLHttpRequest</h2>
+        <p id="demo"></p>
+
+        <script>
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function() {
+                var myObj = JSON.parse(this.responseText);
+                var result = "Name: " + myObj.name + "<br>";
+                result += "Age: " + myObj.age + "<br>";
+                result += "Pets: <ul>";
+                for (var i = 0; i < myObj.pets.length; i++) {
+                    result += "<li>Animal: " + myObj.pets[i].animal + ", Name: " + myObj.pets[i].name + "</li>";
+                }
+                result += "</ul>";
+                document.getElementById("demo").innerHTML = result;
+            }
+            xmlhttp.open("GET", "http://cspro.sogang.ac.kr/~cse20171645/json_demo.txt");
+            xmlhttp.send();
+        </script>
+    </body>
+</html>
